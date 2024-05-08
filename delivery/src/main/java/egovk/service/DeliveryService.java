@@ -10,7 +10,4 @@ public interface DeliveryService {
     Delivery createDelivery(Delivery delivery) throws Exception;
     Delivery updateDelivery(Delivery delivery) throws Exception;
     void deleteDelivery(String deliveryId) throws Exception;
-
-    Delivery completeDelivery(CompleteDeliveryCommand completeDeliveryCommand)
-        throws Exception;
 }

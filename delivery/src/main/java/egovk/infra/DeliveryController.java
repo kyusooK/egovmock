@@ -1,67 +1,56 @@
 package egovk.infra;
 
 import egovk.domain.*;
+import egovk.service.*;
+import java.util.List;
 import java.util.Optional;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//<<< Clean Arch / Inbound Adaptor
-
 @RestController
 // @RequestMapping(value="/deliveries")
-@Transactional
 public class DeliveryController {
 
-    @Autowired
-    DeliveryRepository deliveryRepository;
+    @Resource(name = "deliveryService")
+    private DeliveryService deliveryService;
 
-    @RequestMapping(
-        value = "deliveries/{id}/createdelivery",
-        method = RequestMethod.PUT,
-        produces = "application/json;charset=UTF-8"
-    )
-    public Delivery createDelivery(
-        @PathVariable(value = "id") String id,
-        @RequestBody CreateDeliveryCommand createDeliveryCommand,
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws Exception {
-        System.out.println("##### /delivery/createDelivery  called #####");
-        Optional<Delivery> optionalDelivery = deliveryRepository.findById(id);
-
-        optionalDelivery.orElseThrow(() -> new Exception("No Entity Found"));
-        Delivery delivery = optionalDelivery.get();
-        delivery.createDelivery(createDeliveryCommand);
-
-        deliveryRepository.save(delivery);
-        return delivery;
+    @GetMapping("/deliveries")
+    public List<Delivery> getAllDeliveries() throws Exception {
+        // Get all deliveries via DeliveryService
+        return deliveryService.getAllDeliveries();
     }
 
-    @RequestMapping(
-        value = "deliveries/{id}/updatedelivery",
-        method = RequestMethod.PUT,
-        produces = "application/json;charset=UTF-8"
-    )
+    @GetMapping("/deliveries/{id}")
+    public Optional<Delivery> getDeliveryById(@PathVariable String deliveryId)
+        throws Exception {
+        // Get a delivery by ID via DeliveryService
+        return deliveryService.getDeliveryById(deliveryId);
+    }
+
+    @PostMapping("/deliveries")
+    public Delivery createDelivery(@RequestBody Delivery delivery)
+        throws Exception {
+        // Create a new delivery via DeliveryService
+        return deliveryService.createDelivery(delivery);
+    }
+
+    @PutMapping("/deliveries/{id}")
     public Delivery updateDelivery(
-        @PathVariable(value = "id") String id,
-        @RequestBody UpdateDeliveryCommand updateDeliveryCommand,
-        HttpServletRequest request,
-        HttpServletResponse response
+        @PathVariable String deliveryId,
+        @RequestBody Delivery delivery
     ) throws Exception {
-        System.out.println("##### /delivery/updateDelivery  called #####");
-        Optional<Delivery> optionalDelivery = deliveryRepository.findById(id);
+        // Update an existing delivery via DeliveryService
+        return deliveryService.updateDelivery(delivery);
+    }
 
-        optionalDelivery.orElseThrow(() -> new Exception("No Entity Found"));
-        Delivery delivery = optionalDelivery.get();
-        delivery.updateDelivery(updateDeliveryCommand);
-
-        deliveryRepository.save(delivery);
-        return delivery;
+    @DeleteMapping("/deliveries/{id}")
+    public void deleteDelivery(@PathVariable String deliveryId)
+        throws Exception {
+        // Delete a delivery via DeliveryService
+        deliveryService.deleteDelivery(deliveryId);
     }
 }
-//>>> Clean Arch / Inbound Adaptor
