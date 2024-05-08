@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import egovk.config.kafka.KafkaProcessor;
 import egovk.domain.*;
-import egovk.service.OrderService;
-import javax.annotation.Resource;
 import javax.naming.NameParser;
 import javax.naming.NameParser;
 import javax.transaction.Transactional;
@@ -21,9 +19,6 @@ public class PolicyHandler {
 
     @Autowired
     OrderRepository orderRepository;
-
-    @Resource(name = "orderService")
-    private OrderService orderService;
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString) {}

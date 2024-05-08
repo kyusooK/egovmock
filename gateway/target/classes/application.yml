@@ -16,7 +16,7 @@ spring:
         - id: delivery
           uri: http://localhost:8083
           predicates:
-            - Path=/deliveries/**, /testAggs/**, 
+            - Path=/deliveries/**, 
         - id: frontend
           uri: http://localhost:8080
           predicates:
@@ -48,7 +48,7 @@ spring:
         - id: delivery
           uri: http://delivery:8080
           predicates:
-            - Path=/deliveries/**, /testAggs/**, 
+            - Path=/deliveries/**, 
         - id: frontend
           uri: http://frontend:8080
           predicates:

@@ -57,17 +57,6 @@
                         Delivery
                     </v-list-item>
 
-                    <v-list-item
-                        class="px-2"
-                        key="testAggs"
-                        to="/deliveries/testAggs"
-                        @click="changeUrl()"
-                        color="primary"
-                        style="font-weight:700;"
-                    >
-                        TestAgg
-                    </v-list-item>
-
 
                 </v-list>
             </v-navigation-drawer>
@@ -159,13 +148,6 @@ export default {
                 description: '', 
                 key: 'deliveries', 
                 route: '/deliveries/deliveries',
-                ImageUrl: '',
-            },
-            { 
-                title: 'TestAgg', 
-                description: '', 
-                key: 'testAggs', 
-                route: '/deliveries/testAggs',
                 ImageUrl: '',
             },
             

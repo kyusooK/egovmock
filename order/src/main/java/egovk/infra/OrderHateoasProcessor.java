@@ -13,9 +13,7 @@ public class OrderHateoasProcessor
     @Override
     public EntityModel<Order> process(EntityModel<Order> model) {
         model.add(
-            Link
-                .of(model.getRequiredLink("self").getHref() + "/acceptorder")
-                .withRel("acceptorder")
+            Link.of(model.getRequiredLink("self").getHref() + "/").withRel("")
         );
         model.add(
             Link
