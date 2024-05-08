@@ -79,15 +79,15 @@
                 v-if="!editMode"
                 color="primary"
                 text
-                @click="openCompleteDelivery"
+                @click="openUpdateDelivery"
             >
-                CompleteDelivery
+                UpdateDelivery
             </v-btn>
-            <v-dialog v-model="completeDeliveryDiagram" width="500">
-                <CompleteDeliveryCommand
-                    @closeDialog="closeCompleteDelivery"
-                    @completeDelivery="completeDelivery"
-                ></CompleteDeliveryCommand>
+            <v-dialog v-model="updateDeliveryDiagram" width="500">
+                <UpdateDeliveryCommand
+                    @closeDialog="closeUpdateDelivery"
+                    @updateDelivery="updateDelivery"
+                ></UpdateDeliveryCommand>
             </v-dialog>
         </v-card-actions>
 
@@ -127,7 +127,7 @@
                 text: '',
             },
             createDeliveryDiagram: false,
-            completeDeliveryDiagram: false,
+            updateDeliveryDiagram: false,
         }),
 	async created() {
         },
@@ -251,17 +251,17 @@
             closeCreateDelivery() {
                 this.createDeliveryDiagram = false;
             },
-            async completeDelivery(params) {
+            async updateDelivery(params) {
                 try {
                     if(!this.offline) {
-                        var temp = await axios.put(axios.fixUrl(this.value._links['completedelivery'].href), params)
+                        var temp = await axios.put(axios.fixUrl(this.value._links['updatedelivery'].href), params)
                         for(var k in temp.data) {
                             this.value[k]=temp.data[k];
                         }
                     }
 
                     this.editMode = false;
-                    this.closeCompleteDelivery();
+                    this.closeUpdateDelivery();
                 } catch(e) {
                     this.snackbar.status = true
                     if(e.response && e.response.data.message) {
@@ -271,11 +271,11 @@
                     }
                 }
             },
-            openCompleteDelivery() {
-                this.completeDeliveryDiagram = true;
+            openUpdateDelivery() {
+                this.updateDeliveryDiagram = true;
             },
-            closeCompleteDelivery() {
-                this.completeDeliveryDiagram = false;
+            closeUpdateDelivery() {
+                this.updateDeliveryDiagram = false;
             },
         },
     }

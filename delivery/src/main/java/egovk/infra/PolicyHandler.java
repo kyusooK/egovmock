@@ -34,19 +34,10 @@ public class PolicyHandler {
         System.out.println(
             "\n\n##### listener StartDelivery : " + orderAccepted + "\n\n"
         );
-
-        CreateDeliveryCommand createDeliveryCommand = new CreateDeliveryCommand();
-        // implement:  Map command properties from event
-
-        // deliveryRepository.findById(
-        // implement: Set the Delivery Id from one of OrderAccepted event's corresponding property
-
-        // ).ifPresent(delivery->{
-        //  delivery.createDelivery(createDeliveryCommand);
-        // });
-
         // Comments //
         //OrderAccepted이벤트가 발행될 때 Delivery의 field값과 매칭하여 DeliveryStarted이벤트를 발행한다.
+
+        // Sample Logic //
 
     }
 
@@ -62,6 +53,7 @@ public class PolicyHandler {
             "\n\n##### listener CancelDelivery : " + orderRejected + "\n\n"
         );
 
+        // Sample Logic //
         Delivery.cancelDelivery(event);
     }
 }

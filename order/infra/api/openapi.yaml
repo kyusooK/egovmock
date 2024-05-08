@@ -1,0 +1,241 @@
+---
+paths:
+  '/deliveries/{id}/updatedelivery':
+    summary: update delivery operation on deliveries
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deliveryId:
+                  description: deliveryId of this UpdateDelivery
+                  type: string
+                orderId:
+                  description: orderId of this UpdateDelivery
+                  type: string
+                productId:
+                  description: productId of this UpdateDelivery
+                  type: string
+                productName:
+                  description: productName of this UpdateDelivery
+                  type: string
+                qty:
+                  description: qty of this UpdateDelivery
+                  type: integer
+            examples:
+              Example 0:
+                value:
+                  deliveryId: O123
+                  orderId: O123
+                  productId: P123
+                  productName: PN123
+                  qty: 10
+      parameters:
+        - name: id
+          description: UpdateDelivery name
+          schema:
+            type: string
+          in: path
+          required: true
+          examples:
+            Example 0:
+              value: O123
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+              examples:
+                Example 0:
+                  value:
+                    deliveryId: O123
+                    orderId: O123
+                    productId: P123
+                    productName: PN123
+                    qty: 10
+          description: UpdateDelivery Operation
+      operationId: UpdateDelivery
+      summary: UpdateDelivery
+      description: UpdateDelivery
+  /deliveries:
+    summary: Global operations on deliveries
+    get:
+      tags:
+        - deliveries
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Delivery'
+              examples:
+                deliveries_json:
+                  value:
+                    - deliveryId: A string
+                      orderId: A string
+                      productId: A string
+                      productName: A string
+                      qty: 1
+          description: Get list of deliveries
+      operationId: GetDelivery
+      summary: Get list of deliveries
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+            examples:
+              '1':
+                value:
+                  deliveryId: A string
+                  orderId: A string
+                  productId: A string
+                  productName: A string
+                  qty: 1
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+              examples:
+                '1':
+                  value:
+                    deliveryId: A string
+                    orderId: A string
+                    productId: A string
+                    productName: A string
+                    qty: 1
+          description: Changed Delivery
+      operationId: Post Delivery
+      summary: Post Delivery
+  '/deliveries/{id}':
+    summary: Specific operation on deliveries
+    get:
+      parameters:
+        - examples:
+            A string:
+              value: A string
+          name: id
+          description: Delivery name
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+              examples:
+                '1':
+                  value:
+                    deliveryId: A string
+                    orderId: A string
+                    productId: A string
+                    productName: A string
+                    qty: 1
+          description: deliveries with specified id
+      operationId: GetDeliveryById
+      summary: Get Delivery by id
+      description: Get Delivery by id
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+            examples:
+              '1':
+                value:
+                  deliveryId: A string
+                  orderId: A string
+                  productId: A string
+                  productName: A string
+                  qty: 1
+        required: true
+      parameters:
+        - examples:
+            '1':
+              value: 1
+          name: deliveryId
+          description: Delivery name
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+              examples:
+                '1':
+                  value:
+                    deliveryId: A string
+                    orderId: A string
+                    productId: A string
+                    productName: A string
+                    qty: 1
+          description: Changed Delivery
+      operationId: PatchDelivery
+      summary: Patch existing Delivery
+    parameters:
+      - name: id
+        description: Delivery id
+        schema:
+          type: string
+        in: path
+        required: true
+openapi: 3.0.2
+info:
+  title: Delivery
+  version: 0.0.1
+  description: API definition of delivery
+  contact:
+    name: creator's name
+    url: 'http://creator.homepage.address'
+    email: creator@creator.com
+  license:
+    name: MIT License
+    url: 'https://opensource.org/licenses/MIT'
+components:
+  schemas:
+    Delivery:
+      title: Root Type for Delivery
+      description: The root of the Delivery type's schema.
+      type: object
+      properties:
+        deliveryId:
+          description: deliveryId of this Delivery
+          type: string
+        orderId:
+          description: orderId of this Delivery
+          type: string
+        productId:
+          description: productId of this Delivery
+          type: string
+        productName:
+          description: productName of this Delivery
+          type: string
+        qty:
+          description: qty of this Delivery
+          type: integer
+      example:
+        deliveryId: A string
+        orderId: A string
+        productId: A string
+        productName: A string
+        qty: 1
+tags:
+  - name: Delivery
+    description: Delivery resource

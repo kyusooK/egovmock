@@ -48,11 +48,11 @@ public class Delivery {
 
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
-    public void completeDelivery(
-        CompleteDeliveryCommand completeDeliveryCommand
-    ) {
+    public void updateDelivery(UpdateDeliveryCommand updateDeliveryCommand) {
         //implement business logic here:
 
+        DeliveryUpdated deliveryUpdated = new DeliveryUpdated(this);
+        deliveryUpdated.publishAfterCommit();
     }
 
     //>>> Clean Arch / Port Method
@@ -65,6 +65,8 @@ public class Delivery {
         Delivery delivery = new Delivery();
         repository().save(delivery);
 
+        DeliveryCanceled deliveryCanceled = new DeliveryCanceled(delivery);
+        deliveryCanceled.publishAfterCommit();
         */
 
         /** Example 2:  finding and process
@@ -74,6 +76,8 @@ public class Delivery {
             delivery // do something
             repository().save(delivery);
 
+            DeliveryCanceled deliveryCanceled = new DeliveryCanceled(delivery);
+            deliveryCanceled.publishAfterCommit();
 
          });
         */

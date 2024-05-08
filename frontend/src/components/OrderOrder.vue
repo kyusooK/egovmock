@@ -88,6 +88,20 @@
                     @rejectOrder="rejectOrder"
                 ></RejectOrderCommand>
             </v-dialog>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openUpdateOrder"
+            >
+                UpdateOrder
+            </v-btn>
+            <v-dialog v-model="updateOrderDiagram" width="500">
+                <UpdateOrderCommand
+                    @closeDialog="closeUpdateOrder"
+                    @updateOrder="updateOrder"
+                ></UpdateOrderCommand>
+            </v-dialog>
         </v-card-actions>
 
         <v-snackbar
@@ -127,6 +141,7 @@
             },
             acceptOrderDiagram: false,
             rejectOrderDiagram: false,
+            updateOrderDiagram: false,
         }),
 	async created() {
         },
@@ -270,6 +285,32 @@
             },
             closeRejectOrder() {
                 this.rejectOrderDiagram = false;
+            },
+            async updateOrder(params) {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['updateorder'].href), params)
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                    this.closeUpdateOrder();
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            openUpdateOrder() {
+                this.updateOrderDiagram = true;
+            },
+            closeUpdateOrder() {
+                this.updateOrderDiagram = false;
             },
         },
     }
