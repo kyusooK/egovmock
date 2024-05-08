@@ -33,6 +33,7 @@ function EgovNoticeDetail(props) {
 
     const [acceptOrderopen, setAcceptOrderOpen] = useState(false);
     const [rejectOrderopen, setRejectOrderOpen] = useState(false);
+    const [updateOrderopen, setUpdateOrderOpen] = useState(false);
     const condition = true; 
 
     const [entity, setEntity] = useState("");
@@ -96,6 +97,19 @@ function EgovNoticeDetail(props) {
                 navigate({pathname: URL.ERROR}, {state: {msg: resp.resultMessage}});
             }else{
                 setRejectOrderOpen(false);
+                fetchOrder(orderId);
+            }
+        });
+    }
+    function updateOrder(){
+
+        axios.put(`/orders/${orderId}/updateorder`, {orderId: entity }) 
+        .then(response => {
+            const resp = response.data
+            if(!resp){
+                navigate({pathname: URL.ERROR}, {state: {msg: resp.resultMessage}});
+            }else{
+                setUpdateOrderOpen(false);
                 fetchOrder(orderId);
             }
         });
@@ -169,6 +183,14 @@ function EgovNoticeDetail(props) {
                                         }}>
                                             RejectOrder
                                         </button>
+                                        <button className="btn btn_blue_h46 w_100"
+                                         onClick={() => {
+                                            if (condition) {  
+                                            setUpdateOrderOpen(true);
+                                            }
+                                        }}>
+                                            UpdateOrder
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="right_col btn1" style={{marginTop: "5px"}}>
@@ -230,6 +252,31 @@ function EgovNoticeDetail(props) {
                                     </button>
                                     <button onClick={rejectOrder} className="btn btn_blue_h46 w_100">
                                     RejectOrder
+                                    </button>
+                                </DialogActions>
+                            </Dialog>
+                        </div>
+                        <div>
+                            <Dialog open={updateOrderopen} onClose={() => setUpdateOrderOpen(false)}>
+                                <DialogTitle>UpdateOrder</DialogTitle>
+                                <DialogContent>
+                                    <TextField 
+                                        autoFocus
+                                        margin="dense"
+                                        id="orderId"
+                                        label="OrderId"
+                                        type="text"
+                                        fullWidth
+                                        value={entity}
+                                        onChange={(e) => setEntity(e.target.value)}
+                                    />
+                                </DialogContent>
+                                <DialogActions>
+                                    <button onClick={() => setUpdateOrderOpen(false)} className="btn btn_blue_h46 w_100">
+                                        취소
+                                    </button>
+                                    <button onClick={updateOrder} className="btn btn_blue_h46 w_100">
+                                    UpdateOrder
                                     </button>
                                 </DialogActions>
                             </Dialog>

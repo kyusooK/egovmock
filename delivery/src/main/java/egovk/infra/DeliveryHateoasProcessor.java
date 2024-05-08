@@ -19,11 +19,8 @@ public class DeliveryHateoasProcessor
         );
         model.add(
             Link
-                .of(
-                    model.getRequiredLink("self").getHref() +
-                    "/completedelivery"
-                )
-                .withRel("completedelivery")
+                .of(model.getRequiredLink("self").getHref() + "/updatedelivery")
+                .withRel("updatedelivery")
         );
 
         return model;

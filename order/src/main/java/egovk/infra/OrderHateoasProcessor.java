@@ -20,6 +20,11 @@ public class OrderHateoasProcessor
                 .of(model.getRequiredLink("self").getHref() + "/rejectorder")
                 .withRel("rejectorder")
         );
+        model.add(
+            Link
+                .of(model.getRequiredLink("self").getHref() + "/updateorder")
+                .withRel("updateorder")
+        );
 
         return model;
     }

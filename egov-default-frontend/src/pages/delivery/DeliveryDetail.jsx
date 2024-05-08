@@ -32,7 +32,7 @@ function EgovNoticeDetail(props) {
     const searchCondition = location.state.searchCondition;
 
     const [createDeliveryopen, setCreateDeliveryOpen] = useState(false);
-    const [completeDeliveryopen, setCompleteDeliveryOpen] = useState(false);
+    const [updateDeliveryopen, setUpdateDeliveryOpen] = useState(false);
     const condition = true; 
 
     const [entity, setEntity] = useState("");
@@ -87,15 +87,15 @@ function EgovNoticeDetail(props) {
             }
         });
     }
-    function completeDelivery(){
+    function updateDelivery(){
 
-        axios.put(`/deliveries/${deliveryId}/completedelivery`, {deliveryId: entity }) 
+        axios.put(`/deliveries/${deliveryId}/updatedelivery`, {deliveryId: entity }) 
         .then(response => {
             const resp = response.data
             if(!resp){
                 navigate({pathname: URL.ERROR}, {state: {msg: resp.resultMessage}});
             }else{
-                setCompleteDeliveryOpen(false);
+                setUpdateDeliveryOpen(false);
                 fetchDelivery(deliveryId);
             }
         });
@@ -168,10 +168,10 @@ function EgovNoticeDetail(props) {
                                         <button className="btn btn_blue_h46 w_100"
                                          onClick={() => {
                                             if (condition) {  
-                                            setCompleteDeliveryOpen(true);
+                                            setUpdateDeliveryOpen(true);
                                             }
                                         }}>
-                                            CompleteDelivery
+                                            UpdateDelivery
                                         </button>
                                     </div>
                                 </div>
@@ -214,14 +214,14 @@ function EgovNoticeDetail(props) {
                             </Dialog>
                         </div>
                         <div>
-                            <Dialog open={completeDeliveryopen} onClose={() => setCompleteDeliveryOpen(false)}>
-                                <DialogTitle>CompleteDelivery</DialogTitle>
+                            <Dialog open={updateDeliveryopen} onClose={() => setUpdateDeliveryOpen(false)}>
+                                <DialogTitle>UpdateDelivery</DialogTitle>
                                 <DialogContent>
                                     <TextField 
                                         autoFocus
                                         margin="dense"
-                                        id=""
-                                        label=""
+                                        id="deliveryId"
+                                        label="DeliveryId"
                                         type="text"
                                         fullWidth
                                         value={entity}
@@ -229,11 +229,11 @@ function EgovNoticeDetail(props) {
                                     />
                                 </DialogContent>
                                 <DialogActions>
-                                    <button onClick={() => setCompleteDeliveryOpen(false)} className="btn btn_blue_h46 w_100">
+                                    <button onClick={() => setUpdateDeliveryOpen(false)} className="btn btn_blue_h46 w_100">
                                         취소
                                     </button>
-                                    <button onClick={completeDelivery} className="btn btn_blue_h46 w_100">
-                                    CompleteDelivery
+                                    <button onClick={updateDelivery} className="btn btn_blue_h46 w_100">
+                                    UpdateDelivery
                                     </button>
                                 </DialogActions>
                             </Dialog>
