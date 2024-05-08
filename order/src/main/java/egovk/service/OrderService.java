@@ -13,4 +13,5 @@ public interface OrderService {
 
     Order acceptOrder(AcceptOrderCommand acceptOrderCommand) throws Exception;
     Order rejectOrder(RejectOrderCommand rejectOrderCommand) throws Exception;
+    Order updateOrder(UpdateOrderCommand updateOrderCommand) throws Exception;
 }

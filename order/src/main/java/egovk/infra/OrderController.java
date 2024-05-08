@@ -1,83 +1,95 @@
 package egovk.infra;
 
 import egovk.domain.*;
+import egovk.service.*;
+import java.util.List;
 import java.util.Optional;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//<<< Clean Arch / Inbound Adaptor
-
 @RestController
 // @RequestMapping(value="/orders")
-@Transactional
 public class OrderController {
 
-    @Autowired
-    OrderRepository orderRepository;
+    @Resource(name = "orderService")
+    private OrderService orderService;
+
+    @GetMapping("/orders")
+    public List<Order> getAllOrders() throws Exception {
+        // Get all orders via OrderService
+        return orderService.getAllOrders();
+    }
+
+    @GetMapping("/orders/{id}")
+    public Optional<Order> getOrderById(@PathVariable String orderId)
+        throws Exception {
+        // Get a order by ID via OrderService
+        return orderService.getOrderById(orderId);
+    }
+
+    @PostMapping("/orders")
+    public Order createOrder(@RequestBody Order order) throws Exception {
+        // Create a new order via OrderService
+        return orderService.createOrder(order);
+    }
+
+    @PutMapping("/orders/{id}")
+    public Order updateOrder(
+        @PathVariable String orderId,
+        @RequestBody Order order
+    ) throws Exception {
+        // Update an existing order via OrderService
+        return orderService.updateOrder(order);
+    }
+
+    @DeleteMapping("/orders/{id}")
+    public void deleteOrder(@PathVariable String orderId) throws Exception {
+        // Delete a order via OrderService
+        orderService.deleteOrder(orderId);
+    }
 
     @RequestMapping(
-        value = "orders/",
+        value = "orders",
         method = RequestMethod.POST,
         produces = "application/json;charset=UTF-8"
     )
     public Order acceptOrder(
+        @RequestBody AcceptOrderCommand acceptOrderCommand,
         HttpServletRequest request,
-        HttpServletResponse response,
-        @RequestBody Order order
+        HttpServletResponse response
     ) throws Exception {
-        System.out.println("##### /order/acceptOrder  called #####");
-        order.acceptOrder(acceptOrdercommand);
-        orderRepository.save(order);
-        return order;
+        return orderService.acceptOrder(acceptOrderCommand);
     }
 
     @RequestMapping(
-        value = "orders/{id}/rejectorder",
+        value = "/orders/{id}/rejectorder",
         method = RequestMethod.PUT,
         produces = "application/json;charset=UTF-8"
     )
     public Order rejectOrder(
-        @PathVariable(value = "id") String id,
+        @PathVariable(value = "id") String orderId,
         @RequestBody RejectOrderCommand rejectOrderCommand,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws Exception {
-        System.out.println("##### /order/rejectOrder  called #####");
-        Optional<Order> optionalOrder = orderRepository.findById(id);
-
-        optionalOrder.orElseThrow(() -> new Exception("No Entity Found"));
-        Order order = optionalOrder.get();
-        order.rejectOrder(rejectOrderCommand);
-
-        orderRepository.save(order);
-        return order;
+        return orderService.rejectOrder(rejectOrderCommand);
     }
 
     @RequestMapping(
-        value = "orders/{id}/updateorder",
+        value = "/orders/{id}/updateorder",
         method = RequestMethod.PUT,
         produces = "application/json;charset=UTF-8"
     )
     public Order updateOrder(
-        @PathVariable(value = "id") String id,
+        @PathVariable(value = "id") String orderId,
         @RequestBody UpdateOrderCommand updateOrderCommand,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws Exception {
-        System.out.println("##### /order/updateOrder  called #####");
-        Optional<Order> optionalOrder = orderRepository.findById(id);
-
-        optionalOrder.orElseThrow(() -> new Exception("No Entity Found"));
-        Order order = optionalOrder.get();
-        order.updateOrder(updateOrderCommand);
-
-        orderRepository.save(order);
-        return order;
+        return orderService.updateOrder(updateOrderCommand);
     }
 }
-//>>> Clean Arch / Inbound Adaptor

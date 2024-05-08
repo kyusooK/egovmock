@@ -4,6 +4,7 @@ import egovk.domain.AcceptOrderCommand;
 import egovk.domain.Order;
 import egovk.domain.OrderRepository;
 import egovk.domain.RejectOrderCommand;
+import egovk.domain.UpdateOrderCommand;
 import egovk.service.OrderService;
 import java.util.List;
 import java.util.Optional;
@@ -115,6 +116,35 @@ public class OrderServiceImpl
 
             // business Logic....
             order.rejectOrder(rejectOrderCommand);
+            orderRepository.save(order);
+
+            return order;
+        } else {
+            throw processException("info.nodata.msg");
+        }
+    }
+
+    @Override
+    public Order updateOrder(UpdateOrderCommand updateOrderCommand)
+        throws Exception {
+        // You can implement logic here, or call the domain method of the Order.
+
+        /** Option 1-1:  implement logic here     
+            Order order = new Order();
+            order.setUserId(event.getUserId());
+
+            orderRepository.save(order);   
+        */
+
+        Optional<Order> optionalOrder = orderRepository.findById(
+            updateOrderCommand.getOrderId()
+        );
+
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+
+            // business Logic....
+            order.updateOrder(updateOrderCommand);
             orderRepository.save(order);
 
             return order;
