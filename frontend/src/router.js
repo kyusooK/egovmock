@@ -10,8 +10,6 @@ import OrderOrderDetail from "./components/listers/OrderOrderDetail"
 
 import DeliveryDeliveryManager from "./components/listers/DeliveryDeliveryCards"
 import DeliveryDeliveryDetail from "./components/listers/DeliveryDeliveryDetail"
-import DeliveryTestAggManager from "./components/listers/DeliveryTestAggCards"
-import DeliveryTestAggDetail from "./components/listers/DeliveryTestAggDetail"
 
 
 export default new Router({
@@ -38,16 +36,6 @@ export default new Router({
                 path: '/deliveries/deliveries/:id',
                 name: 'DeliveryDeliveryDetail',
                 component: DeliveryDeliveryDetail
-            },
-            {
-                path: '/deliveries/testAggs',
-                name: 'DeliveryTestAggManager',
-                component: DeliveryTestAggManager
-            },
-            {
-                path: '/deliveries/testAggs/:id',
-                name: 'DeliveryTestAggDetail',
-                component: DeliveryTestAggDetail
             },
 
 

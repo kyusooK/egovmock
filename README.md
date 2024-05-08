@@ -38,7 +38,6 @@ mvn spring-boot:run
 - delivery
 ```
  http :8088/deliveries deliveryId="deliveryId" orderId="orderId" productId="productId" productName="productName" qty="qty" 
- http :8088/testAggs id="id" 
 ```
 
 

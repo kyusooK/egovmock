@@ -53,12 +53,11 @@ public class OrderController {
     }
 
     @RequestMapping(
-        value = "/orders/{id}/acceptorder",
-        method = RequestMethod.PUT,
+        value = "orders",
+        method = RequestMethod.POST,
         produces = "application/json;charset=UTF-8"
     )
     public Order acceptOrder(
-        @PathVariable(value = "id") String orderId,
         @RequestBody AcceptOrderCommand acceptOrderCommand,
         HttpServletRequest request,
         HttpServletResponse response
@@ -68,7 +67,7 @@ public class OrderController {
 
     @RequestMapping(
         value = "/orders/{id}/rejectorder",
-        method = RequestMethod.DELETE,
+        method = RequestMethod.PUT,
         produces = "application/json;charset=UTF-8"
     )
     public Order rejectOrder(

@@ -11,9 +11,6 @@ import OrderEdit from 'pages/order/OrderEdit';
 import DeliveryList from 'pages/delivery/DeliveryList';
 import DeliveryDetail from 'pages/delivery/DeliveryDetail';
 import DeliveryEdit from 'pages/delivery/DeliveryEdit';
-import TestAggList from 'pages/delivery/TestAggList';
-import TestAggDetail from 'pages/delivery/TestAggDetail';
-import TestAggEdit from 'pages/delivery/TestAggEdit';
 
 
 //COMMON
@@ -154,10 +151,6 @@ const SecondRoutes = () => {
           <Route path="/delivery/deliveries" element={<DeliveryList />} />
           <Route path="/delivery/DeliveryEdit" element={<DeliveryEdit />} />
           <Route path="/delivery/DeliveryDetail" element={<DeliveryDetail />} />
-
-          <Route path="/delivery/testAggs" element={<TestAggList />} />
-          <Route path="/delivery/TestAggEdit" element={<TestAggEdit />} />
-          <Route path="/delivery/TestAggDetail" element={<TestAggDetail />} />
 
 
           <Route path={URL.MAIN} element={<EgovMain />} />

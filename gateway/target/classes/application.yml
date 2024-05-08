@@ -16,7 +16,7 @@ spring:
         - id: delivery
           uri: http://localhost:8083
           predicates:
-            - Path=/deliveries/**, /testAggs/**, 
+            - Path=/deliveries/**, 
         - id: egov-default-backend
           uri: http://localhost:8080
           predicates:
@@ -52,7 +52,7 @@ spring:
         - id: delivery
           uri: http://delivery:8080
           predicates:
-            - Path=/deliveries/**, /testAggs/**, 
+            - Path=/deliveries/**, 
         - id: egov-default-backend
           uri: http://default-backend:8080
           predicates:        

@@ -75,8 +75,6 @@ function EgovHeader() {
 
                     <li><NavLink to="/delivery/deliveries" className={({ isActive }) => (isActive ? "cur" : "")}>Delivery</NavLink></li>
 
-                    <li><NavLink to="/delivery/testAggs" className={({ isActive }) => (isActive ? "cur" : "")}>TestAgg</NavLink></li>
-
                         <li><NavLink to={URL.INFORM} className={({ isActive }) => (isActive ? "cur" : "")}>알림마당</NavLink></li>
                         {sessionUserSe ==='USR' &&
                             <li><NavLink to={URL.ADMIN} className={({ isActive }) => (isActive ? "cur" : "")}>사이트관리</NavLink></li>

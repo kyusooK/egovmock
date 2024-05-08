@@ -30,18 +30,6 @@ function EgovLeftNavInform() {
             </div>
         );
     }
-    if (lastSegment === 'testAggs'){
-        return (
-            <div className="nav">
-                <div className="inner">
-                    <h2>Delivery</h2>
-                    <ul className="menu4">
-                        <li><NavLink to="/delivery/testAggs" className={({ isActive }) => (isActive ? "cur" : "")}>TestAgg</NavLink></li>
-                    </ul>
-                </div>
-            </div>
-        );
-    }
     return null;
 }
 

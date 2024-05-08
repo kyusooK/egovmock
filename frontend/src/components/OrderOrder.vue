@@ -224,17 +224,38 @@
             change(){
                 this.$emit('input', this.value);
             },
-            async acceptOrder(params) {
+            async acceptOrder() {
+                try {
+                    if(!this.offline){
+                        var temp = await axios.post(axios.fixUrl(this.value._links[''].href))
+                        for(var k in temp.data) this.value[k]=temp.data[k];
+                    }
+
+                    this.editMode = false;
+                    
+                    this.$emit('input', this.value);
+                    this.$emit('delete', this.value);
+                
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            async rejectOrder(params) {
                 try {
                     if(!this.offline) {
-                        var temp = await axios.put(axios.fixUrl(this.value._links['acceptorder'].href), params)
+                        var temp = await axios.put(axios.fixUrl(this.value._links['rejectorder'].href), params)
                         for(var k in temp.data) {
                             this.value[k]=temp.data[k];
                         }
                     }
 
                     this.editMode = false;
-                    this.closeAcceptOrder();
+                    this.closeRejectOrder();
                 } catch(e) {
                     this.snackbar.status = true
                     if(e.response && e.response.data.message) {
@@ -244,31 +265,11 @@
                     }
                 }
             },
-            openAcceptOrder() {
-                this.acceptOrderDiagram = true;
+            openRejectOrder() {
+                this.rejectOrderDiagram = true;
             },
-            closeAcceptOrder() {
-                this.acceptOrderDiagram = false;
-            },
-            async rejectOrder() {
-                try {
-                    if(!this.offline) {
-                        await axios.delete(axios.fixUrl(this.value._links['rejectOrder'].href))
-                    }
-
-                    this.editMode = false;
-                    this.isDelete = true;
-                    
-                    this.$emit('input', this.value);
-                    this.$emit('delete', this.value);
-                } catch(e) {
-                    this.snackbar.status = true
-                    if(e.response && e.response.data.message) {
-                        this.snackbar.text = e.response.data.message
-                    } else {
-                        this.snackbar.text = e
-                    }
-                }
+            closeRejectOrder() {
+                this.rejectOrderDiagram = false;
             },
         },
     }
